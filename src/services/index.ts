@@ -13,7 +13,7 @@ const openai = axios.create({
 export const getCompletion = async (prompt: string): Promise<string> => {
   const response = await openai.post("/completions", {
     model: "text-davinci-003",
-    prompt: `buat kalimat dari kata: ${prompt}`,
+    prompt: `buat kalimat dari kata di bawah ini, jika kata dalam bahasa asing, terjemahkan ke bahasa indonesia:\n\n"${prompt}"`,
     max_tokens: 100,
     temperature: 0.9,
     top_p: 1,
