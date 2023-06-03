@@ -27,12 +27,14 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-[#40128B]">
+    <main className="flex min-h-screen flex-col md:items-center justify-between md:justify-center bg-[#40128B]">
       <Head>
         <title>Sign Detection App</title>
       </Head>
       <div className="max-w-[600px] w-full flex flex-col items-center justify-center relative">
         <Video responses={predictions} setResponses={setPredictions} />
+      </div>
+      <div className="mb-20 md:mb-0 md:max-w-[600px] w-full px-4 md:px-0">
         <div className="flex items-center justify-center mt-4 w-full gap-2 flex-wrap">
           {predictions.map((prediction, index) => (
             <Button
@@ -45,20 +47,16 @@ export default function Home() {
             </Button>
           ))}
         </div>
-
-        <div className="mt-6 w-full">
-          {predictions.length > 0 && (
-            <Button
-              onClick={handleSubmit}
-              color="deep-purple"
-              className="w-full flex items-center justify-center"
-              disabled={loading}
-            >
-              {loading ? <Spinner color="deep-purple" /> : "Submit"}
-            </Button>
-          )}
-        </div>
-
+        {predictions.length > 0 && (
+          <Button
+            onClick={handleSubmit}
+            color="deep-purple"
+            className="w-full flex items-center justify-center mt-4"
+            disabled={loading}
+          >
+            {loading ? <Spinner color="deep-purple" /> : "Submit"}
+          </Button>
+        )}
         {response && predictions.length > 0 && (
           <div className="flex flex-col items-center justify-center mt-4">
             <p className="text-sm text-center text-white">{response}</p>
