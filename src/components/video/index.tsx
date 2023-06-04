@@ -139,7 +139,11 @@ export default function Video({ responses, setResponses }: VideoProps) {
   }, [prediction]);
 
   if (!gesture) {
-    return <Spinner color="deep-purple" scale={2} />;
+    return (
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <Spinner color="deep-purple" scale={2} />
+      </div>
+    );
   }
 
   return (
