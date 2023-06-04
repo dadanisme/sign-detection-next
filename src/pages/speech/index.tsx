@@ -5,7 +5,7 @@ import Link from "next/link";
 import Head from "next/head";
 import clsx from "clsx";
 
-const ANDROID = "Linux armv8l";
+const ANDROID = "Linux armv81";
 
 export default function Speech() {
   const [recognizer, setRecognizer] = useState<SpeechRecognition>();
@@ -45,7 +45,6 @@ export default function Speech() {
     }
 
     navigator.mediaDevices.getUserMedia({ audio: true });
-    alert(navigator.platform);
     setOs(navigator.platform);
   }, []);
 
