@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BiMicrophone } from "react-icons/bi";
 import { BsChevronLeft } from "react-icons/bs";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Speech() {
   const [recognizer, setRecognizer] = useState<SpeechRecognition>();
@@ -42,6 +43,9 @@ export default function Speech() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-[#40128B] px-4">
+      <Head>
+        <title>Speech Recognition App</title>
+      </Head>
       <button
         className="border-2 border-white rounded-full p-20 text-white
       hover:bg-white/75 hover:text-[#40128B] transition-all duration-300
