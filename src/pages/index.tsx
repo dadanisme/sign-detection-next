@@ -1,4 +1,4 @@
-import { Spinner, Chip, Button } from "@material-tailwind/react";
+import { Spinner, Button } from "@material-tailwind/react";
 import { getCompletion, speak } from "@/services";
 import { useState } from "react";
 import Head from "next/head";
@@ -39,7 +39,7 @@ export default function Home() {
           {predictions.map((prediction, index) => (
             <Button
               key={index}
-              color="deep-purple"
+              color="amber"
               className="px-2 py-1 rounded-md"
               onClick={() => handleDelete(index)}
             >
