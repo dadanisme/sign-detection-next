@@ -64,13 +64,17 @@ export default function Speech() {
             : "hover:border-[#40128B] border-white"
         )}
         // different for android
-        onMouseDown={() => os !== ANDROID && start()}
-        onMouseUp={() => os !== ANDROID && stop()}
-        onTouchStart={() => os !== ANDROID && start()}
-        onTouchCancel={() => os !== ANDROID && stop()}
-        onTouchCancelCapture={() => os !== ANDROID && stop()}
-        onTouchEnd={() => os !== ANDROID && stop()}
-        onTouchEndCapture={() => os !== ANDROID && stop()}
+        onMouseDown={() =>
+          !os?.toLocaleLowerCase().includes(ANDROID) && start()
+        }
+        onMouseUp={() => !os?.toLocaleLowerCase().includes(ANDROID) && stop()}
+        onTouchStart={() =>
+          !os?.toLocaleLowerCase().includes(ANDROID) && start()
+        }
+        onTouchCancel={() =>
+          !os?.toLocaleLowerCase().includes(ANDROID) && stop()
+        }
+        onTouchEnd={() => !os?.toLocaleLowerCase().includes(ANDROID) && stop()}
         // different for android
         onClick={() =>
           os?.toLocaleLowerCase().includes(ANDROID) &&
