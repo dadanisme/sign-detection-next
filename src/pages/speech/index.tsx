@@ -5,7 +5,7 @@ import Link from "next/link";
 import Head from "next/head";
 import clsx from "clsx";
 
-const ANDROID = "Linux armv81";
+const ANDROID = "Linux";
 
 export default function Speech() {
   const [recognizer, setRecognizer] = useState<SpeechRecognition>();
@@ -15,12 +15,12 @@ export default function Speech() {
 
   const start = () => {
     setResult(undefined);
-    os === ANDROID && setIsListening(true);
+    os?.includes(ANDROID) && setIsListening(true);
     recognizer?.start();
   };
 
   const stop = () => {
-    os === ANDROID && setIsListening(false);
+    os?.includes(ANDROID) && setIsListening(false);
     recognizer?.stop();
   };
 
@@ -72,7 +72,9 @@ export default function Speech() {
         onTouchEnd={() => os !== ANDROID && stop()}
         onTouchEndCapture={() => os !== ANDROID && stop()}
         // different for android
-        onClick={() => os === ANDROID && (isListening ? stop() : start())}
+        onClick={() =>
+          os?.includes(ANDROID) && (isListening ? stop() : start())
+        }
       >
         {isListening ? (
           <BsSquareFill className="font-bold text-6xl" />
