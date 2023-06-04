@@ -32,7 +32,7 @@ export default function Speech() {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    console.log(SpeechRecognition);
+    if (!SpeechRecognition) return alert("Speech Recognition tidak didukung");
 
     if (SpeechRecognition) {
       const recognition = new SpeechRecognition();
@@ -48,7 +48,6 @@ export default function Speech() {
 
     navigator.mediaDevices.getUserMedia({ audio: true });
     setOs(navigator.platform);
-    console.log(navigator.platform);
   }, []);
 
   return (
