@@ -45,6 +45,7 @@ export default function Speech() {
     }
 
     navigator.mediaDevices.getUserMedia({ audio: true });
+    alert(navigator.platform);
     setOs(navigator.platform);
   }, []);
 
