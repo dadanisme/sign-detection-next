@@ -8,9 +8,7 @@ export default function Speech() {
   const [recognizer, setRecognizer] = useState<SpeechRecognition>();
   const [result, setResult] = useState<string>();
 
-  const start = async () => {
-    await navigator.mediaDevices.getUserMedia({ audio: true });
-
+  const start = () => {
     setResult(undefined);
     recognizer?.start();
   };
@@ -20,7 +18,6 @@ export default function Speech() {
   };
 
   const handleResult = (event: SpeechRecognitionEvent) => {
-    console.log(event.results[0][0].transcript);
     setResult(event.results[0][0].transcript);
   };
 
@@ -39,6 +36,8 @@ export default function Speech() {
 
       setRecognizer(recognition);
     }
+
+    navigator.mediaDevices.getUserMedia({ audio: true });
   }, []);
 
   return (
@@ -51,8 +50,10 @@ export default function Speech() {
       hover:bg-white/75 hover:text-[#40128B] transition-all duration-300
       hover:border-[#40128B] active:scale-95 active:bg-white/50"
         onMouseDown={start}
-        onTouchStart={start}
         onMouseUp={stop}
+        onTouchStart={start}
+        onTouchCancel={stop}
+        onTouchCancelCapture={stop}
         onTouchEnd={stop}
       >
         <BiMicrophone className="font-bold text-7xl" />
