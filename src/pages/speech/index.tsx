@@ -32,6 +32,8 @@ export default function Speech() {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
+    console.log(SpeechRecognition);
+
     if (SpeechRecognition) {
       const recognition = new SpeechRecognition();
 
@@ -45,8 +47,8 @@ export default function Speech() {
     }
 
     navigator.mediaDevices.getUserMedia({ audio: true });
-    alert(navigator.platform);
     setOs(navigator.platform);
+    console.log(navigator.platform);
   }, []);
 
   return (
