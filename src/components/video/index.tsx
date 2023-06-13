@@ -37,7 +37,7 @@ export default function Video({ responses, setResponses }: VideoProps) {
     const options: GestureRecognizerOptions = {
       baseOptions: {
         modelAssetPath: "model.task",
-        delegate: "CPU",
+        delegate: "GPU",
       },
       runningMode: "VIDEO",
       numHands: 2,
