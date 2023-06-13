@@ -8,9 +8,12 @@ import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { HAND_CONNECTIONS } from "@mediapipe/hands";
 
 import { useState, useEffect } from "react";
-import { Spinner, Button } from "@material-tailwind/react";
+import { Spinner } from "@material-tailwind/react";
 import Link from "next/link";
 import { BsChevronRight } from "react-icons/bs";
+import clsx from "clsx";
+
+const WAIT_TIME = 1;
 
 interface VideoProps {
   responses: string[];
@@ -24,6 +27,7 @@ export default function Video({ responses, setResponses }: VideoProps) {
   const [gesture, setGesture] = useState<GestureRecognizer>();
   const [webcamEnabled, setWebcamEnabled] = useState(false);
   const [prediction, setPrediction] = useState<string>("");
+  const [timer, setTimer] = useState<number>(0);
 
   const createGestureRecognizer = async () => {
     const vision = await FilesetResolver.forVisionTasks(
@@ -87,7 +91,7 @@ export default function Video({ responses, setResponses }: VideoProps) {
 
       if (results?.gestures.length) {
         const categoryName = results?.gestures[0][0].categoryName;
-        // const categoryScore = (results?.gestures[0][0].score! * 100).toFixed(2);
+        const categoryScore = (results?.gestures[0][0].score! * 100).toFixed(2);
 
         setPrediction(categoryName);
       }
@@ -99,6 +103,16 @@ export default function Video({ responses, setResponses }: VideoProps) {
       window.requestAnimationFrame(predictWebcam);
     }
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((timer) => timer + 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [prediction]);
 
   useEffect(() => {
     createGestureRecognizer();
@@ -119,7 +133,9 @@ export default function Video({ responses, setResponses }: VideoProps) {
   }, [webcamEnabled]);
 
   useEffect(() => {
+    if (timer <= WAIT_TIME) return;
     if (prediction) {
+      setTimer(0);
       setResponses((responses) => {
         if (prediction === "None") {
           return responses;
@@ -161,7 +177,18 @@ export default function Video({ responses, setResponses }: VideoProps) {
           style={{ position: "absolute", left: 0, top: 0 }}
           ref={canvas}
         ></canvas>
-        <p id="gesture_output" className="output"></p>
+        <div
+          className={clsx(
+            "absolute -bottom-0.5 left-0",
+            "bg-amber-600",
+            "h-1",
+            timer! == 0 && "transition-all duration-1000 ease-linear"
+          )}
+          style={{
+            width: `${(timer / WAIT_TIME) * 100}%`,
+            maxWidth: "100%",
+          }}
+        />
       </div>
       <Link href="/speech">
         <div
