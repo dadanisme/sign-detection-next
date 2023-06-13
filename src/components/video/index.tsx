@@ -182,7 +182,7 @@ export default function Video({ responses, setResponses }: VideoProps) {
             "absolute -bottom-0.5 left-0",
             "bg-amber-600",
             "h-1",
-            timer! == 0 && "transition-all duration-1000 ease-linear"
+            timer !== 0 && "transition-all duration-1000 ease-linear"
           )}
           style={{
             width: `${(timer / WAIT_TIME) * 100}%`,
