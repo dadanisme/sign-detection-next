@@ -5,22 +5,19 @@ import Link from "next/link";
 import Head from "next/head";
 import clsx from "clsx";
 
-const ANDROID = "linux";
-
 export default function Speech() {
   const [recognizer, setRecognizer] = useState<SpeechRecognition>();
   const [result, setResult] = useState<string>();
-  const [os, setOs] = useState<string>();
   const [isListening, setIsListening] = useState(false);
 
   const start = () => {
     setResult(undefined);
-    os?.toLocaleLowerCase().includes(ANDROID) && setIsListening(true);
+    setIsListening(true);
     recognizer?.start();
   };
 
   const stop = () => {
-    os?.toLocaleLowerCase().includes(ANDROID) && setIsListening(false);
+    setIsListening(false);
     recognizer?.stop();
   };
 
@@ -47,7 +44,6 @@ export default function Speech() {
     }
 
     navigator.mediaDevices.getUserMedia({ audio: true });
-    setOs(navigator.platform);
   }, []);
 
   return (
