@@ -64,23 +64,7 @@ export default function Speech() {
             ? "border-white animate-pulse bg-red-600"
             : "hover:border-[#40128B] border-white"
         )}
-        // different for android
-        onMouseDown={() =>
-          !os?.toLocaleLowerCase().includes(ANDROID) && start()
-        }
-        onMouseUp={() => !os?.toLocaleLowerCase().includes(ANDROID) && stop()}
-        onTouchStart={() =>
-          !os?.toLocaleLowerCase().includes(ANDROID) && start()
-        }
-        onTouchCancel={() =>
-          !os?.toLocaleLowerCase().includes(ANDROID) && stop()
-        }
-        onTouchEnd={() => !os?.toLocaleLowerCase().includes(ANDROID) && stop()}
-        // different for android
-        onClick={() =>
-          os?.toLocaleLowerCase().includes(ANDROID) &&
-          (isListening ? stop() : start())
-        }
+        onClick={isListening ? stop : start}
       >
         {isListening ? (
           <BsSquareFill className="font-bold text-6xl" />
