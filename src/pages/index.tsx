@@ -1,8 +1,10 @@
 import { Spinner, Button } from "@material-tailwind/react";
 import { getCompletion, speak } from "@/services";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Head from "next/head";
 import dynamic from "next/dynamic";
+
+import { ChatContext } from "@/layouts";
 
 const Video = dynamic(() => import("@/components/video"), { ssr: false });
 
@@ -10,6 +12,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<string>();
   const [predictions, setPredictions] = useState<string[]>([]);
+
+  const { addChat } = useContext(ChatContext);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -20,6 +24,10 @@ export default function Home() {
 
     setLoading(false);
     setResponse(completion);
+    addChat({
+      text: completion,
+      name: "Gesture",
+    });
   };
 
   const handleDelete = (index: number) => {

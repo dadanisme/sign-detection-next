@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { BiMicrophone } from "react-icons/bi";
 import { BsChevronLeft, BsSquareFill } from "react-icons/bs";
 import Link from "next/link";
 import Head from "next/head";
 import clsx from "clsx";
+import { ChatContext } from "@/layouts";
 
 export default function Speech() {
   const [recognizer, setRecognizer] = useState<SpeechRecognition>();
   const [result, setResult] = useState<string>();
   const [isListening, setIsListening] = useState(false);
+
+  const { addChat } = useContext(ChatContext);
 
   const start = () => {
     setResult(undefined);
@@ -19,6 +22,11 @@ export default function Speech() {
   const stop = () => {
     setIsListening(false);
     recognizer?.stop();
+
+    addChat({
+      text: result!,
+      name: "Speech",
+    });
   };
 
   const handleResult = (event: SpeechRecognitionEvent) => {
