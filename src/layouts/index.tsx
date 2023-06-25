@@ -37,10 +37,11 @@ export default function Layout({ children }: Props) {
       <div className="h-screen overflow-hidden">
         <aside
           className={clsx(
-            "fixed top-0 h-full w-96 bg-gray-200 shadow-lg p-4",
+            "fixed top-0 h-full bg-gray-200 shadow-lg p-4",
             "transition-all duration-300 ease-in-out z-[999] transform"
           )}
           style={{
+            width: "24rem",
             right: isOpen ? 0 : "-100%",
           }}
         >
