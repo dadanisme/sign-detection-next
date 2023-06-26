@@ -8,10 +8,15 @@ import { ChatContext } from "@/layouts";
 
 const Video = dynamic(() => import("@/components/video"), { ssr: false });
 
+interface Prediction {
+  text: string;
+  score: number;
+}
+
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<string>();
-  const [predictions, setPredictions] = useState<string[]>([]);
+  const [predictions, setPredictions] = useState<Prediction[]>([]);
 
   const { addChat } = useContext(ChatContext);
 
@@ -19,7 +24,9 @@ export default function Home() {
     setLoading(true);
     setResponse("");
 
-    const completion = await getCompletion(predictions.join(", "));
+    const completion = await getCompletion(
+      predictions.map((p) => p.text).join(", ")
+    );
     speak(completion);
 
     setLoading(false);
@@ -43,7 +50,7 @@ export default function Home() {
         <Video responses={predictions} setResponses={setPredictions} />
       </div>
       <div className="mb-20 md:mb-0 md:max-w-[600px] w-full px-4 md:px-0">
-        <div className="flex items-center justify-center mt-4 w-full gap-2 flex-wrap">
+        <div className="flex items-center justify-center mt-4 w-full gap-2 flex-wrap max-h-32 overflow-auto">
           {predictions.map((prediction, index) => (
             <Button
               key={index}
@@ -51,7 +58,7 @@ export default function Home() {
               className="px-2 py-1 rounded-md"
               onClick={() => handleDelete(index)}
             >
-              {prediction}
+              {prediction.text} ({prediction.score.toFixed(2)}%)
             </Button>
           ))}
         </div>
