@@ -59,6 +59,7 @@ export default function Speech() {
       <Head>
         <title>Speech Recognition App</title>
       </Head>
+      <h2 className="text-lg text-white font-semibold mb-4">Deteksi Suara</h2>
       <button
         className={clsx(
           "border-2 rounded-full p-20 text-white",

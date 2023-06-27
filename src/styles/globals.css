@@ -12,3 +12,15 @@ canvas {
 * {
   -webkit-tap-highlight-color: transparent;
 }
+
+.words-wrapper {
+  overflow-y: auto;
+}
+
+.words-wrapper::-webkit-scrollbar {
+  width: 5px;
+}
+
+.words-wrapper::-webkit-scrollbar-thumb {
+  background: #888;
+}

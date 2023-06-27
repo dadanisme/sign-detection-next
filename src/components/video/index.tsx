@@ -148,15 +148,15 @@ export default function Video({ setResponses }: VideoProps) {
 
   return (
     <>
-      <div className="relative">
-        <div className="absolute top-2 left-2 z-[5]">
+      <div className="relative h-96">
+        <div className="absolute top-2 left-1/2 z-[5] transform -translate-x-1/2">
           <div className="bg-white text-black px-2 py-1 rounded-lg">
             {prediction?.text} ({prediction?.score.toFixed(2)}%)
           </div>
         </div>
         <video
           ref={video}
-          className="clear-both block h-full w-full rounded-lg"
+          className="clear-both block h-96 rounded-lg"
           autoPlay
           muted
           playsInline
@@ -167,14 +167,6 @@ export default function Video({ setResponses }: VideoProps) {
           ref={canvas}
         ></canvas>
       </div>
-      <Link href="/speech">
-        <div
-          className="mt-4 flex items-center justify-center gap-1
-          px-2 py-1 bg-none text-white hover:underline cursor-pointer"
-        >
-          Speech to Text <BsChevronRight className="font-bold" />
-        </div>
-      </Link>
     </>
   );
 }

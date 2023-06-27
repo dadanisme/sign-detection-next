@@ -6,6 +6,9 @@ import dynamic from "next/dynamic";
 
 import { ChatContext } from "@/layouts";
 
+import { BiMicrophone } from "react-icons/bi";
+import Link from "next/link";
+
 const Video = dynamic(() => import("@/components/video"), { ssr: false });
 
 interface Prediction {
@@ -46,37 +49,55 @@ export default function Home() {
       <Head>
         <title>Sign Detection App</title>
       </Head>
+      <h2 className="text-lg text-white font-semibold">
+        Deteksi Gerakan Tangan
+      </h2>
       <div className="max-w-[600px] w-full flex flex-col items-center justify-center relative">
         <Video responses={predictions} setResponses={setPredictions} />
       </div>
-      <div className="mb-20 md:mb-0 md:max-w-[600px] w-full px-4 md:px-0">
-        <div className="flex items-center justify-center mt-4 w-full gap-2 flex-wrap max-h-32 overflow-auto">
+      <div className="max-w-[600px] w-full mt-4">
+        <div
+          className="w-full h-24 bg-[#40128B] text-white p-4 rounded-lg outline-none resize-none
+            border-2 border-white border-opacity-10 hover:border-opacity-50 transition-all duration-200
+            flex gap-1 items-start flex-wrap words-wrapper
+            "
+          placeholder="Tulis gerakan tangan yang kamu inginkan"
+        >
           {predictions.map((prediction, index) => (
-            <Button
+            <div
               key={index}
-              color="amber"
-              className="px-2 py-1 rounded-md"
-              onClick={() => handleDelete(index)}
+              className="border border-white border-opacity-10 hover:border-opacity-50 hover:ring-2 hover:ring-white hover:ring-opacity-10
+               px-2 py-0.5 cursor-pointer transition-all duration-200 rounded-md"
             >
-              {prediction.text} ({prediction.score.toFixed(2)}%)
-            </Button>
+              <p
+                className="text-sm select-none"
+                onClick={() => handleDelete(index)}
+              >
+                {prediction.text}
+              </p>
+            </div>
           ))}
         </div>
-        {predictions.length > 0 && (
+
+        <div className="flex items-center justify-between">
           <Button
             onClick={handleSubmit}
             color="deep-purple"
-            className="w-full flex items-center justify-center mt-4"
+            className="w-32 flex items-center justify-center mt-4"
             disabled={loading}
           >
             {loading ? <Spinner color="deep-purple" /> : "Submit"}
           </Button>
-        )}
-        {response && predictions.length > 0 && (
-          <div className="flex flex-col items-center justify-center mt-4">
-            <p className="text-sm text-center text-white">{response}</p>
-          </div>
-        )}
+          {response && predictions.length > 0 && (
+            <div className="w-full flex-1 flex flex-col items-center justify-center mt-4">
+              <p className="text-sm text-center text-white">{response}</p>
+            </div>
+          )}
+
+          <Link href="/speech">
+            <BiMicrophone className="text-white text-2xl cursor-pointer" />
+          </Link>
+        </div>
       </div>
     </main>
   );
