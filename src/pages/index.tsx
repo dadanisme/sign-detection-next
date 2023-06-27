@@ -130,7 +130,7 @@ export default function Home() {
                 className="text-sm select-none"
                 onClick={() => handleDelete(index)}
               >
-                {prediction.text}
+                {prediction.text} ({Math.floor(prediction.score)}%)
               </p>
             </div>
           ))}
