@@ -30,6 +30,7 @@ export default function Video({ setResponses }: VideoProps) {
   const [gesture, setGesture] = useState<GestureRecognizer>();
   const [webcamEnabled, setWebcamEnabled] = useState(false);
   const [prediction, setPrediction] = useState<Prediction>();
+  const [ping, setPing] = useState<number>(0);
 
   const createGestureRecognizer = async () => {
     const vision = await FilesetResolver.forVisionTasks(
@@ -74,8 +75,14 @@ export default function Video({ setResponses }: VideoProps) {
     canvas.current.height = video.current.videoHeight;
 
     try {
+      const start = window.performance.now();
+
       const results = gesture.recognizeForVideo(video.current, Date.now());
 
+      const end = window.performance.now();
+      const elapsed = end - start;
+
+      setPing(elapsed);
       if (results?.landmarks) {
         for (const landmark of results.landmarks) {
           drawConnectors(canvasContext, landmark, HAND_CONNECTIONS, {
@@ -154,6 +161,13 @@ export default function Video({ setResponses }: VideoProps) {
             {prediction?.text} ({prediction?.score.toFixed(2)}%)
           </div>
         </div>
+
+        <div className="absolute bottom-2 left-2 z-[5]">
+          <div className="bg-white text-black px-2 py-1 rounded-lg text-xs">
+            {ping.toFixed(2)}ms
+          </div>
+        </div>
+
         <video
           ref={video}
           className="clear-both block h-96 rounded-lg"
